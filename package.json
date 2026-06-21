@@ -1,0 +1,21 @@
+{
+  "name": "com.launcher.app",
+  "displayName": "My Launcher",
+  "version": "1.0.0",
+  "description": "Android Home Launcher",
+  "main": "index.js",
+  "scripts": {
+    "build": "cordova build android"
+  },
+  "author": "Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "cordova-android": "^10.1.0"
+  },
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {}
+  }
+}
