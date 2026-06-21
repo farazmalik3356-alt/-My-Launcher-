@@ -1,0 +1,48 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+    
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        java-version: '8'
+        distribution: 'temurin'
+    
+    - name: Setup Android SDK
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y android-sdk
+        echo "ANDROID_HOME=/usr/lib/android-sdk" >> $GITHUB_ENV
+    
+    - name: Install Cordova
+      run: |
+        npm install -g cordova@10.0.0
+        cordova --version
+    
+    - name: Add Platform
+      run: |
+        cordova platform add android@9.0.0
+    
+    - name: Build APK
+      run: |
+        cordova build android
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: Launcher-APK
+        path: platforms/android/app/build/outputs/apk/debug/*.apk
